@@ -32,9 +32,26 @@ questions, "how do they lane, how do they teamfight, what are farming patterns**
 * Simple algorithm would be any grave in teamfight wins where grave applied when target under X% health and they take attacks taking them down to 0-ish health
 ** (When camera angles/choices dont matter. i.e player perspective for farming patterns, could generate automated videos aggregating this info)
 
+**How to Use**
+- Clone https://github.com/skadistats/clarity-examples
+- Add the folder inside clarity-examples in this repo to the examples
+- add 
+        <profile>
+            <id>smoketimings</id>
+            <activation><activeByDefault>true</activeByDefault></activation>
+            <properties>
+                <exampleName>smoketimings</exampleName>
+            </properties>
+        </profile>
+  to pom.xml
+- mvn -P smoketimings package
+- run ```python main.py <team_id>``` (python 3)
+
 # TODOs:
 - would be nice to have the games in a database so I can just query. dont have to wait 1-second between every api-request
 - My PC thrashes cpu when downloading 5 files at once...but it seems to be avast who is the main culprit ._.
+- Think about maybe gui stuff/ways to handle replay-downloads(make a bat/sh file to downlaod?)
+- Move the analysis parts to a server, not local
 
 Notes:
 hero_ids.json copied from https://github.com/odota/dotaconstants
