@@ -1,14 +1,14 @@
-_**What it does:**_
+What it does:
 
 Input is the pro team you want to analyse(along with filters for patch/date/etc).
 
-_Functionality 1)_
+Functionality 1)
 
 Download all the matching replays of this team.
 This makes analysing teams easier for the user through being able to simply use "playdemo replays/<match-id>.dem".
 No backing out and having to download next game, and then load it up.
 
-_Functionality 2)_
+Functionality 2)
 
 Parse these downloaded replays for 'tick of interest'
 Definition of interesting would be up to user/script writer for that particular case.
@@ -17,7 +17,7 @@ You can use "demo_gototick <tick_num>" to jump around a replay instantly, no mes
 (demo_gototime exists but has to factor in draft time and other starts. Is just plain more awkward than always correct tick number)
 
 
-_**Possible use cases:**_
+Possible use cases:
 
 1) Making it easier to produce short broadcasting segments/clips for pre-game analysis.
 i.e. you first do some statistical analysis to find interesting points to highlight pre-game. Such as team has 80% winrate this patch with dazzle.
