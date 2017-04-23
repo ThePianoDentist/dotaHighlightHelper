@@ -1,4 +1,4 @@
-What it does:
+*What it does:*
 
 Input is the pro team you want to analyse(along with filters for patch/date/etc).
 
@@ -17,7 +17,7 @@ You can use "demo_gototick <tick_num>" to jump around a replay instantly, no mes
 (demo_gototime exists but has to factor in draft time and other starts. Is just plain more awkward than always correct tick number)
 
 
-Possible use cases:
+*Possible use cases:*
 
 1) Making it easier to produce short broadcasting segments/clips for pre-game analysis.
 i.e. you first do some statistical analysis to find interesting points to highlight pre-game. Such as team has 80% winrate this patch with dazzle.
