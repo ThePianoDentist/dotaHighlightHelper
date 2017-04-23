@@ -36,13 +36,13 @@ questions, "how do they lane, how do they teamfight, what are farming patterns**
 - Clone https://github.com/skadistats/clarity-examples
 - Add the folder inside clarity-examples in this repo to the examples
 - add 
-        <profile>
+        ```<profile>
             <id>smoketimings</id>
             <activation><activeByDefault>true</activeByDefault></activation>
             <properties>
                 <exampleName>smoketimings</exampleName>
             </properties>
-        </profile>
+        </profile>```
   to pom.xml
 - mvn -P smoketimings package
 - run ```python main.py <team_id>``` (python 3)
