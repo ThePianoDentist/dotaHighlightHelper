@@ -1,3 +1,4 @@
+import bz2
 import re
 import subprocess
 import time
@@ -21,20 +22,46 @@ def request_(req_url, sleep_time=None):
 def download_and_extract(match):
     if match.already_have_replay:
         return
-
-    urlretrieve(match.replay_url, match.download_path)
+    try:
+        urlretrieve(match.replay_url, match.download_path)
+    except ConnectionResetError:
+        time.sleep(1)
+        urlretrieve(match.replay_url, match.download_path)
 
     # p = subprocess.Popen(["powershell", "-Command", '"Invoke-WebRequest %s -OutFile \'%s\'"' % (req_url, file_path)],
     #                      stdin=subprocess.PIPE, stdout=subprocess.PIPE,
     #                      stderr=subprocess.PIPE)
     # output, err = p.communicate()
-    folder = re.search("(.*)[\\\\/]\d+.dem.bz2", match.download_path).group(1)
-    # FUCKCICICKCINGNG WINDOWOSOSOWOSOS
     # TODO add other platform version. way to do without 7zip dep on windows as well?
-    p = subprocess.Popen([SEVENZIP_PATH, "x", match.download_path, "-o%s" % folder], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE, shell=True) #TODO check not security risk shell true (really didnt want to do 7zip stuff without it on)
-    output, err = p.communicate()
+    time.sleep(0.1)
+    with open(match.file_path, 'wb') as newf, bz2.BZ2File(match.download_path) as oldf:
+        for data in iter(lambda : oldf.read(100 * 1024), b''):
+            newf.write(data)
+    # p = subprocess.Popen([SEVENZIP_PATH, "x", match.download_path, "-o%s" % folder], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    #                      stderr=subprocess.PIPE, shell=True) #TODO check not security risk shell true (it really didnt want to do 7zip stuff without it on)
+    # output, err = p.communicate()
+    # print(err)  # alright windows. so it gets "ERROR: Unexpected end of data"...but thats out not err.
+    # print(output)
     print("Match successfully downloaded: %d" % match.id)
+    os.remove(match.download_path)  # Delete the old compressed replay file
+
+def download_(match):
+    print(match.id)
+    print(match.already_have_replay)
+    if match.already_have_replay:
+        return
+
+    urlretrieve(match.replay_url, match.download_path)
+    print("Match successfully downloaded: %d" % match.id)
+
+
+def extract_(match):
+    if match.already_have_replay:
+        return
+    with open(match.file_path, 'wb') as newf, bz2.BZ2File(match.download_path) as oldf:
+        for data in iter(lambda : oldf.read(100 * 1024), b''):
+            newf.write(data)
+    print("Match successfully extracted: %d" % match.id)
     os.remove(match.download_path)  # Delete the old compressed replay file
 
 
