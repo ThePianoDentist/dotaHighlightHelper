@@ -33,7 +33,7 @@ def download_and_extract(match):
     #                      stderr=subprocess.PIPE)
     time.sleep(0.1)
     with open(match.file_path, 'wb') as newf, bz2.BZ2File(match.download_path) as oldf:
-        for data in iter(lambda : oldf.read(100 * 1024), b''):
+        for data in iter(lambda: oldf.read(100 * 1024), b''):
             newf.write(data)
 
     print("Match successfully downloaded: %d" % match.id)

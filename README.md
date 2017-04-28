@@ -47,6 +47,7 @@ questions, "how do they lane, how do they teamfight, what are farming patterns* 
 
 # TODOs:
 - Move the analysis parts to a server, not local
+- The output from parallel java tasks mixes lines. Solved by putting matchID into entries, but is this poor solution?
 
 Notes:
 hero_ids.json copied from https://github.com/odota/dotaconstants
