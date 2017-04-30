@@ -20,8 +20,9 @@ You can use "demo_gototick tick_number" console cmd to jump around a replay inst
 requirements:
 python3, java 1.8
 
-- Clone https://github.com/skadistats/clarity and https://github.com/ThePianoDentist/clarity-examples
+- Clone this repo
 - Set REPLAY_FOLDER in config.ini
+- Clone https://github.com/ThePianoDentist/clarity-examples repo
 - cd/move to clarity-examples directory
 - `mvn -P modified_odota package`
 - Set ODOTA_REPLAY_PARSER_FILE in config.ini to the one-jar file produced
