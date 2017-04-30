@@ -16,6 +16,25 @@ Simples examples would be teamfight starts, impressive ultimate uses (i.e chrone
 You can use "demo_gototick <tick_num>" to jump around a replay instantly, no messing with having to manually search through replays
 (demo_gototime exists but has to factor in draft time and other starts. Is just plain more awkward than always correct tick number)
 
+**Instructions**
+requirements:
+python3, java 1.8
+
+- Clone https://github.com/skadistats/clarity and https://github.com/ThePianoDentist/clarity-examples
+- Set REPLAY_FOLDER in config.ini
+- cd/move to clarity-examples directory
+- `mvn -P modified_odota package`
+- Set ODOTA_REPLAY_PARSER_FILE in config.ini to the one-jar file produced
+- Add the folder inside clarity-examples in this repo to the examples
+- make a query on https://www.opendota.com/explorer and click JSON to save result
+
+example usage:
+cd to hightlightHelper directory
+python main.py "C:\Users\Johnny\Downloads\data (4).json" teamfights
+
+you can set a limit on numnber of parallel replay downloads with MAX_PARALLEL_DOWNLOADS in config file.
+
+
 
 **Possible use cases:**
 
@@ -23,36 +42,21 @@ You can use "demo_gototick <tick_num>" to jump around a replay instantly, no mes
 i.e. you first do some statistical analysis to find interesting points to highlight pre-game. Such as team has 80% winrate this patch with void.
 You can then write a simple script to extract ticks where > x enemies were chronoed. Then making a small highlight video to illustrate point is simple and easy.
 
-2) Professional teams preparing for opponents (helps when breaking game down into 'sections' to analayse. i.e. easier to ask multiple
+2) Making montages of players/teams/tournaments. I.e. could extract every rampage in a tournament, every flawless teamwipe, every courier kill etc.
+
+3) Professional teams preparing for opponents (helps when breaking game down into 'sections' to analayse. i.e. easier to ask multiple
 questions, "how do they lane, how do they teamfight, what are farming patterns* etc",
  broken down. Rather than having to analyze every aspect simultaneously.
 
 
 * (When camera angles/choices dont matter. i.e player perspective for farming patterns, could generate automated videos aggregating this info)
 
-**How to Use**
-- Clone https://github.com/skadistats/clarity-examples
-- Add the folder inside clarity-examples in this repo to the examples
-- add 
-        ```<profile>
-            <id>smoketimings</id>
-            <activation><activeByDefault>true</activeByDefault></activation>
-            <properties>
-                <exampleName>smoketimings</exampleName>
-            </properties>
-        </profile>```
-  to pom.xml
-- mvn -P smoketimings package
-- run ```python main.py "download_path"``` (python 3)
+**Known Bugs:**
+- For chronospheres, when specifying minimum enemies caught it will include friendlies
 
-# TODOs:
+**TODOs:**
 - Move the analysis parts to a server, not local
 - The output from parallel java tasks mixes lines. Solved by putting matchID into entries, but is this poor solution?
 
-Notes:
-hero_ids.json copied from https://github.com/odota/dotaconstants
-The smoketimings/Main.java modified from combatlog example of https://github.com/skadistats/clarity-examples
-
-Would not be possible without clarity or opendota projects so thanks to them :D
-
-Housemate (https://github.com/ScoreUnder) was very helpful (File streams with generators stuff, plus java thread-pooling)
+**Notes:**
+Would not be possible/so easy without clarity or opendota projects so thanks to them :D

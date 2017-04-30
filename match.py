@@ -1,21 +1,20 @@
-import codecs
 import json
-import subprocess
+import os
 
 from api_requests import request_
-from constants import *
+import constants
 
 
 class Match:
     def __init__(self, id):
         self.id = int(id)
         self.our_heroes = []
-        self.download_path = REPLAY_FOLDER + os.path.normpath("/%d.dem.bz2") % self.id
+        self.download_path = constants.REPLAY_FOLDER + os.path.normpath("/%d.dem.bz2") % self.id
         self.already_have_replay = self.check_have_replay()  # TODO maybe wants to be property. so we can tell at any time whether we have replay
         self.is_radiant = None
         self.interesting_ticks = set()
         self.replay_url = self.generate_replay_url()
-        # TODO is it worth getting the whole game data from open dota api. might come in useful?
+        self.parsed = False
 
     @property
     def file_path(self):
@@ -39,9 +38,9 @@ class Match:
                 result["cluster"], result["match_id"], result["replay_salt"]
             )
 
-    def parse_replay(self, search_type):
-        jar = os.path.normpath("%s/target/%s.one-jar.jar" % (CLARITY_FOLDER, search_type))
-        fp = os.path.normpath("%s/%d.dem" % (REPLAY_FOLDER, self.id))
-        p = subprocess.Popen(["java", "-jar", jar, fp], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        # TODO do i need to be checking/reporting err?
-        return codecs.iterdecode(p.stdout, 'utf8')
+    # def parse_replay(self):
+    #     jar = os.path.normpath(ODOTA_REPLAY_PARSER_FILE)
+    #     fp = os.path.normpath("%s/%d.dem" % (REPLAY_FOLDER, self.id))
+    #     p = subprocess.Popen(["java", "-jar", jar, fp], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #     # TODO do i need to be checking/reporting err?
+    #     return codecs.iterdecode(p.stdout, 'utf8')
