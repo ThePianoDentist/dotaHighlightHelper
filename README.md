@@ -5,7 +5,7 @@ Input is json results file of https://www.opendota.com/explorer query
 *Functionality 1)*
 
 Download all the matching replays for this query.
-This makes analysing teams/games easier for the user through being able to simply use "playdemo replays/<match-id>.dem".
+This makes analysing teams/games easier for the user through being able to simply use "playdemo replays/match-id.dem" console cmd.
 No backing out and having to download next game, and then load it up.
 
 *Functionality 2)*
@@ -13,7 +13,7 @@ No backing out and having to download next game, and then load it up.
 Parse these downloaded replays for 'tick of interest'
 Definition of interesting would be up to user/script writer for that particular case.
 Simples examples would be teamfight starts, impressive ultimate uses (i.e chrones that catch multiple people), ganks etc
-You can use "demo_gototick <tick_num>" to jump around a replay instantly, no messing with having to manually search through replays
+You can use "demo_gototick tick_number" console cmd to jump around a replay instantly, no messing with having to manually search through replays
 (demo_gototime exists but has to factor in draft time and other starts. Is just plain more awkward than always correct tick number)
 
 **Instructions**
