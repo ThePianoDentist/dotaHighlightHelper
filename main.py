@@ -10,7 +10,7 @@ def command_line_options():
     parser = argparse.ArgumentParser(description='Bulk download dota replays, plus analysis')
     parser.add_argument('odota_file', type=str, help="File-path of open-dota explorer json results")
     parser.add_argument("search_type", type=str, help='Search for this in replays. I.e. teamfights')
-    parser.add_argument('--startOffset', "-o", default=2, type=float, dest="startOffset", help="Seconds before event to log")
+    parser.add_argument('--startOffset', "-o", default=5, type=float, dest="startOffset", help="Seconds before event to log")
     parser.add_argument('--list', '-l', dest="list", help='List search types available for use',
                         action='store_true')
     parser.add_argument('--onlyDownload', '-d', dest="onlyDownload", help='Only download replays. No analysis.',
@@ -27,7 +27,8 @@ def command_line_options():
     parser.add_argument('--minEnemiesCaught', '-c', type=int, default=3, dest="min_enemy_catch",
                         help='Minimum number of heores caught in chrono/rp/blackhole etc')
     args = parser.parse_args()
-    return args.odota_file, args.search_type, args.out_file, args.onlyDownload, args.list, args.startOffset,\
+    tick_offset = args.startOffset * 30  # Believe dota2 runs at 30 ticks / seconds
+    return args.odota_file, args.search_type, args.out_file, args.onlyDownload, args.list, tick_offset,\
            args.min_num_kills, args.min_num_enemy_kills, args.teamfight_cooldown, args.min_multikill, args.min_enemy_catch
 
 
