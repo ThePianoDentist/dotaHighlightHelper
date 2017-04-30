@@ -58,6 +58,7 @@ questions, "how do they lane, how do they teamfight, what are farming patterns* 
 
 **TODOs:**
 - Move the analysis parts to a server, not local
+- Let parts that can be asyn, be async. (I.e. dont need to wait for all match_its found to start downloading replays, same for parsing)
 - The output from parallel java tasks mixes lines. Solved by putting matchID into entries, but is this poor solution?
 
 **Notes:**
