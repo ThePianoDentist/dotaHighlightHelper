@@ -26,7 +26,7 @@ class Search(object):
         self.matches_by_id = {}
         self.search_phrase = None
         self.matches = set()
-        self.tick_offset = tick_offset * 30  # apparently runs at 30 ticks/s
+        self.tick_offset = tick_offset
         self.multiline = False
         self.odota_file = odota_file
         self.expected_hero_count = expected_hero_count

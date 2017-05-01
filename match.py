@@ -37,10 +37,3 @@ class Match:
             return "http://replay{0}.valve.net/570/{1}_{2}.dem.bz2".format(
                 result["cluster"], result["match_id"], result["replay_salt"]
             )
-
-    # def parse_replay(self):
-    #     jar = os.path.normpath(ODOTA_REPLAY_PARSER_FILE)
-    #     fp = os.path.normpath("%s/%d.dem" % (REPLAY_FOLDER, self.id))
-    #     p = subprocess.Popen(["java", "-jar", jar, fp], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #     # TODO do i need to be checking/reporting err?
-    #     return codecs.iterdecode(p.stdout, 'utf8')
