@@ -32,7 +32,7 @@ example usage:
 cd to hightlightHelper directory
 python main.py "C:\Users\Johnny\Downloads\data (4).json" teamfights
 
-(if just testing, filtering tournament: Kiev major, Player: Boboka, Hero: Riki....and searching for courierkills is a nice short example)
+(if just testing, filtering tournament: Kiev major, Player: Boboka, Hero: Riki....and searching for courierkills is a nice short example e.g. https://www.youtube.com/watch?v=jmhubgQrh9E&feature=youtu.be)
 
 you can set a limit on numnber of parallel replay downloads with MAX_PARALLEL_DOWNLOADS in config file.
 
