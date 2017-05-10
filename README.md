@@ -34,7 +34,7 @@ example usage:
 cd to hightlightHelper directory
 python main.py "C:\Users\Johnny\Downloads\data (4).json" teamfights
 
-(if just testing, filtering tournament: Kiev major, Player: Boboka, Hero: Riki....and searching for courierkills is a nice short example e.g. https://www.youtube.com/watch?v=jmhubgQrh9E&feature=youtu.be)
+(if just testing, filtering tournament: Kiev major, Player: Boboka, Hero: Riki....and searching for courierkills is a nice short example e.g. https://youtu.be/WzH2RR0dT5M or https://www.youtube.com/watch?v=jmhubgQrh9E&feature=youtu.be)
 
 you can set a limit on numnber of parallel replay downloads with MAX_PARALLEL_DOWNLOADS in config file.
 
@@ -65,4 +65,5 @@ questions, "how do they lane, how do they teamfight, what are farming patterns* 
 
 **Notes:**
 - https://github.com/ThePianoDentist/simpleDotaMatchIDtoReplayUrlAPI is the server for getting replay urls
-- Many thanks to clarity, datdota and opendota who material this relies on; and/or directly uses
+- Many thanks to clarity, datdota and opendota who material this relies on; and/or directly uses....and valve obviously.
+- You can extend project yourself with your own search classes in the python, following the examples
