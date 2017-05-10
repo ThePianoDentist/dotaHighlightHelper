@@ -1,8 +1,10 @@
 **What it does:**
 
 Input is one of
-a) csv results file of https://www.datdota.com/frames query
-b) json results file of https://www.opendota.com/explorer query
+
+a) csv results file of https://www.datdota.com/frames query \n
+
+b) json results file of https://www.opendota.com/explorer query \n
 
 *Functionality 1)*
 
