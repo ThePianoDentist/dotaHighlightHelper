@@ -1,6 +1,8 @@
 **What it does:**
 
-Input is json results file of https://www.opendota.com/explorer query
+Input is one of
+a) csv results file of https://www.datdota.com/frames query
+b) json results file of https://www.opendota.com/explorer query
 
 *Functionality 1)*
 
@@ -26,7 +28,7 @@ python3, java 1.8
 - `mvn -P modified_odota package`
 - Set ODOTA_REPLAY_PARSER_FILE in config.ini to the one-jar file produced
 - Set REPLAY_FOLDER in config.ini
-- make a query on https://www.opendota.com/explorer and click JSON to save result
+- make a query on https://www.opendota.com/explorer (click JSON to save result) or https://www.datdota.com/frames (click CSV to save result)
 
 example usage:
 cd to hightlightHelper directory
