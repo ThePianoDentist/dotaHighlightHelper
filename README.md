@@ -24,9 +24,7 @@ python3, java 1.8
 
 - Clone this repo (https://github.com/ThePianoDentist/dotaHighlightHelper)
 - Clone https://github.com/ThePianoDentist/clarity-examples repo
-- cd/move to clarity-examples directory
-- `mvn -P modified_odota package`
-- Set ODOTA_REPLAY_PARSER_FILE in config.ini to the one-jar file produced
+- Set PARSER_FOLDER in config.ini to where clarity-examples was cloned to
 - Set REPLAY_FOLDER in config.ini
 - make a query on https://www.opendota.com/explorer (click JSON to save result) or https://www.datdota.com/frames (click CSV to save result)
 
@@ -65,4 +63,4 @@ questions, "how do they lane, how do they teamfight, what are farming patterns* 
 
 **Notes:**
 - https://github.com/ThePianoDentist/simpleDotaMatchIDtoReplayUrlAPI is the server for getting replay urls
-Would not be possible/so easy without clarity or opendota projects so thanks to them :D
+- Many thanks to clarity, datdota and opendota who material this relies on; and/or directly uses
