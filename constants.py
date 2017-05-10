@@ -14,7 +14,7 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 REPLAY_FOLDER = os.path.normpath(config.get('settings', 'REPLAY_FOLDER'))
-ODOTA_REPLAY_PARSER_FILE = os.path.normpath(config.get('settings', 'ODOTA_REPLAY_PARSER_FILE'))
+PARSER_FOLDER = os.path.normpath(config.get('settings', 'PARSER_FOLDER'))
 try:
     MAX_DOWNLOAD_THREADS = min(int(config.get('settings', 'MAX_PARALLEL_DOWNLOADS')), 5)
 except configparser.NoOptionError:

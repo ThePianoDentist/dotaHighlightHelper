@@ -118,7 +118,7 @@ class Search(object):
         We dont catch stderr, so it will just print to console/shell
         :return: generator of std_out
         """
-        jar = os.path.normpath(constants.ODOTA_REPLAY_PARSER_FILE)
+        jar = os.path.normpath(constants.PARSER_FOLDER + "/target/modified_odota.one-jar.jar")
         files = [os.path.normpath("%s/%d.dem" % (constants.REPLAY_FOLDER, match.id)) for match in self.matches]
         p = subprocess.Popen(["java", "-jar", jar] + files, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         return codecs.iterdecode(p.stdout, 'utf8')
