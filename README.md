@@ -53,7 +53,7 @@ questions, "how do they lane, how do they teamfight, what are farming patterns* 
  broken down. Rather than having to analyze every aspect simultaneously.
 
 
-* (When camera angles/choices dont matter. i.e player perspective for farming patterns, could generate automated videos aggregating this info)
+*(When camera angles/choices dont matter. i.e player perspective for farming patterns, could generate automated videos aggregating this info)
 
 **Known Bugs:**
 - For chronospheres, when specifying minimum enemies caught it will include friendlies
