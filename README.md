@@ -2,9 +2,9 @@
 
 Input is one of
 
-a) csv results file of https://www.datdota.com/frames query \n
+a) csv results file of https://www.datdota.com/frames query <br>
 
-b) json results file of https://www.opendota.com/explorer query \n
+b) json results file of https://www.opendota.com/explorer query <br>
 
 *Functionality 1)*
 
