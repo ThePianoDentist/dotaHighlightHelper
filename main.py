@@ -52,7 +52,7 @@ def validate_input(odota_file, list_searches, search_type, only_download):
         return
 
 
-def make_search(odota_file, search_type, tick_offset, min_num_kills, min_num_enemy_kills, teamfight_cooldown, min_multikill, min_enemy_catch):
+def make_search(query_file, search_type, tick_offset, min_num_kills, min_num_enemy_kills, teamfight_cooldown, min_multikill, min_enemy_catch):
     """
 
     :param odota_file:
@@ -69,14 +69,14 @@ def make_search(odota_file, search_type, tick_offset, min_num_kills, min_num_ene
     # TODO this dict lookup just makes it harder to read. we've already validated allowed. just call exact classes below?
     search_class = ALLOWABLE_SEARCHES[search_type]
     if search_type == "teamfights":
-        return search_class(odota_file, tick_offset, min_num_kills=min_num_kills,
+        return search_class(query_file, tick_offset, min_num_kills=min_num_kills,
                             min_num_enemy_kills=min_num_enemy_kills, teamfight_cooldown=teamfight_cooldown)
     elif search_type == "multikills":
-        return search_class(odota_file, tick_offset, min_multikill=min_multikill)
+        return search_class(query_file, tick_offset, min_multikill=min_multikill)
     elif search_type in ("chronos", "rps", "blackholes"):
-        return search_class(odota_file, tick_offset, min_enemies_caught=min_enemy_catch)
+        return search_class(query_file, tick_offset, min_enemies_caught=min_enemy_catch)
     else:
-        return search_class(odota_file, tick_offset)
+        return search_class(query_file, tick_offset)
 
 
 def main():
@@ -85,12 +85,12 @@ def main():
         heroes_dict = json.load(f)
 
     # TODO should add a flag to return times instead of ticks. as its trivial now using odota Parse.java
-    odota_file, search_type, out_file, only_download, list_searches, tick_offset, min_num_kills, min_num_enemy_kills, teamfight_cooldown, min_multikill, min_enemy_catch =\
+    query_file, search_type, out_file, only_download, list_searches, tick_offset, min_num_kills, min_num_enemy_kills, teamfight_cooldown, min_multikill, min_enemy_catch =\
         command_line_options()
-    validate_input(odota_file, list_searches, search_type, only_download)
+    validate_input(query_file, list_searches, search_type, only_download)
 
-    search = make_search(odota_file, search_type, tick_offset, min_num_kills, min_num_enemy_kills, teamfight_cooldown, min_multikill, min_enemy_catch)
-    search.find_match_ids_odota()  #TODO this doesnt need to fully block downloading of first replays. can use generators?
+    search = make_search(query_file, search_type, tick_offset, min_num_kills, min_num_enemy_kills, teamfight_cooldown, min_multikill, min_enemy_catch)
+    search.find_match_ids()  #TODO this doesnt need to fully block downloading of first replays. can use generators?
     search.download_replays()
     if only_download:
         return

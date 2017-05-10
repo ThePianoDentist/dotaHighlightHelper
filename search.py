@@ -1,5 +1,6 @@
 import codecs
 import copy
+import csv
 import json
 import os
 import re
@@ -10,13 +11,13 @@ from json import JSONDecodeError
 import time
 
 import constants
-from api_requests import download_and_extract
+from api_requests import download_and_extract, postjson_request_, request_
 from match import Match
 
 
 class Search(object):
 
-    def __init__(self, odota_file, tick_offset, expected_hero_count=None):
+    def __init__(self, query_file, tick_offset, expected_hero_count=None):
         """
 
         :param tick_offset: how far before event to log it (seconds)
@@ -28,7 +29,8 @@ class Search(object):
         self.matches = set()
         self.tick_offset = tick_offset
         self.multiline = False
-        self.odota_file = odota_file
+        self.query_file = query_file
+        self.query_datdota = query_file.endswith('csv')  # assuming csv for datdota. json for odota. Im sure this isnt good
         self.expected_hero_count = expected_hero_count
 
     def match_from_id(self, match_id):
@@ -37,16 +39,8 @@ class Search(object):
         """
         return self.matches_by_id[match_id]
 
-    def find_match_ids_odota(self):
-        with open(self.odota_file) as f:
-            data = json.load(f)
-        for match_info in data:
-            if match_info["match_id"] not in self.matches_by_id:
-                new_match = Match(match_info["match_id"])
-                self.matches.add(new_match)
-                self.matches_by_id[new_match.id] = new_match
-            new_match.add_hero(match_info["hero_id"])
-
+    def find_match_ids(self):
+        self.find_match_ids_datdota() if self.query_datdota else self.find_match_ids_odota()
         if self.expected_hero_count:
             # TODO could probably do this check whilst adding matches
             # Have to watch out for obvious solutions missing off check of last match
@@ -57,6 +51,51 @@ class Search(object):
                             len(match.our_heroes), self.expected_hero_count)
                     )
 
+    def find_match_ids_odota(self):
+        with open(self.query_file) as f:
+            data = json.load(f)
+        for match_info in data:
+            if match_info["match_id"] not in self.matches_by_id:
+                new_match = Match(match_info["match_id"])
+                self.matches.add(new_match)
+                self.matches_by_id[new_match.id] = new_match
+            new_match.add_hero(match_info["hero_id"])
+
+    def find_match_ids_datdota(self):
+        with open(self.query_file) as f:
+
+            def remove_bom(line):
+                return line.lstrip("ï»¿")
+
+            reader = csv.DictReader((remove_bom(line) for line in f), delimiter=',')
+            for i, match_info in enumerate(reader):
+                read_match_id = int(match_info["Match ID"])
+                if read_match_id not in self.matches_by_id:
+                    new_match = Match(read_match_id)
+                    self.matches.add(new_match)
+                    self.matches_by_id[new_match.id] = new_match
+                with open("hero_ids.json") as f_heroes:
+                    heroes = json.load(f_heroes)
+                for _, hero in heroes.items():
+                    # Try and be safe from datdota hero names not quite matching localized names in json constants
+                    if ''.join([j.lower() for j in hero["localized_name"] if j.isalpha()]) == ''.join([j.lower() for j in match_info["Hero"] if j.isalpha()]):
+                        new_match.add_hero(hero["id"])
+                        break
+
+    def get_download_urls(self):
+        request_data = json.dumps({"contents": [m.id for m in self.matches if not m.already_have_replay]})
+        try:
+            result = json.loads(postjson_request_("http://37.97.239.48:8000/matches", request_data))
+            for found in result["found"]:
+                match = self.matches_by_id[found["id"]]
+                match.replay_url = found["url"]
+            for failed in result["failed"]:  # use opendota as a fallback
+                match = self.matches_by_id[failed]
+                match.replay_url = match.generate_replay_url()
+        except:  # my server is probably down or borken
+            for match in self.matches:
+                match.replay_url = match.generate_replay_url()
+
     def download_replays(self):
         """
         Use multiprocessing pool to download a few in parallel
@@ -64,6 +103,7 @@ class Search(object):
         :return:
         """
         # TODO make sure other processes cleaned up if this one gets killed
+        self.get_download_urls() # Get the urls first
         print("Downloading replays. May take a while")
         start = time.time()
         with futures.ThreadPoolExecutor(max_workers=constants.MAX_DOWNLOAD_THREADS) as executor:

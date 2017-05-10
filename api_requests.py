@@ -14,6 +14,21 @@ def request_(req_url, sleep_time=1):
     return out
 
 
+def postjson_request_(req_url, data):
+    """
+    no sleep time as these are for my own server
+    :param req_url:
+    :param data:
+    :return:
+    """
+    print("Requesting: %s" % req_url)
+    request = Request(req_url, data=data.encode('ascii'))
+    request.add_header('Content-Type', 'application/json')
+    response = urlopen(request)
+    out = response.read().decode('utf8') # cos python3 is kind of stupid http://stackoverflow.com/questions/6862770/python-3-let-json-object-accept-bytes-or-let-urlopen-output-strings
+    return out
+
+
 def download(match):
     succeeded = False
     tries = 0

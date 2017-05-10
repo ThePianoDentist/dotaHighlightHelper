@@ -13,7 +13,7 @@ class Match:
         self.already_have_replay = self.check_have_replay()  # TODO maybe wants to be property. so we can tell at any time whether we have replay
         self.is_radiant = None
         self.interesting_ticks = set()
-        self.replay_url = self.generate_replay_url()
+        self.replay_url = None  # query all matches (from my rust server) at once later
         self.parsed = False
 
     @property
@@ -30,6 +30,10 @@ class Match:
         return os.path.exists(self.file_path)
 
     def generate_replay_url(self):
+        """
+        This is only called as a fallback
+        :return:
+        """
         if self.already_have_replay:
             return None  # Not going to be downloading. so dont need. not worth the api call
         else:
